@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  &__input {
+    outline: none;
+    border: none;
+    font-size: 20px;
+    padding: 10px 0 15px 30px;
+    border-bottom: solid 1px #dddddd;
+    &.ng-valid.ng-touched {
+      border-bottom: solid 1px forestgreen;
+    }
+    &.ng-invalid.ng-touched {
+      border-bottom: solid 1px red;
+    }
+  }
+  &__label {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  &__button {
+    margin-top: 20px;
+    width: 100%;
+    height: 40px;
+    border: 0px;
+    border-radius: 20px;
+    color: white;
+    background: linear-gradient(45deg, #1bdaf2, #e77be7);
+  }
+}
+
+.ref {
+  margin-top: 20px;
+}
+
+svg {
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  left: -6px;
+  bottom: 15px;
+}
+
+.validation {
+  color: red;
+  &.unvisible {
+    visibility: hidden;
+  }
+}
+
+.validation-container {
+  min-height: 20px;
+}
+
