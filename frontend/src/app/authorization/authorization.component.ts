@@ -1,21 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../shared/secvices/auth.service";
+import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-authorization',
   templateUrl: './authorization.component.html',
   styleUrls: ['./authorization.component.scss']
 })
-export class AuthorizationComponent implements OnInit {
+export class AuthorizationComponent implements OnInit, OnDestroy {
   form: FormGroup
+  aSub: Subscription
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.form = new FormGroup({
-      phone: new FormControl('', [
+      number: new FormControl('', [
         Validators.required,
         Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9][-\\s\\.]?[0-9][-\\s\\.]?[0-9][-\\s\\.]?[0-9]{4,6}$')
       ]),
@@ -27,14 +31,30 @@ export class AuthorizationComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    if (this.aSub) {
+      this.aSub.unsubscribe();
+    }
+  }
+
   submit() {
     if (this.form.valid) {
-      this.auth.login(this.form.value).subscribe(
-        () => console.log('Login successful'),
-        error => console.warn(error)
+      this.form.disable();
+
+      this.aSub = this.auth.login(this.form.value).subscribe(
+        (res) => {
+          console.log('Login successful: ', res);
+          this.router.navigate(['/chats'])
+        },
+        (error) => {
+          console.warn(error);
+          this.form.enable();
+        }
       );
-      console.log('formData: ', {...this.form.value});
-      // this.form.reset();
+      // console.log(this.form.value);
+      // this.auth.login(this.form.value).then((res) => console.log(res.body));
+      // this.auth.login(this.form.value)
+      this.form.reset();
     }
   }
 }

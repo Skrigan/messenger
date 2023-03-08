@@ -15,6 +15,7 @@ const generateAccessToken = (id, roles) => {
 
 class authController {
     async registration(req, res) {
+        // console.log('token: ', req.headers.authorization);
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -36,8 +37,10 @@ class authController {
         }
     }
     async login(req, res) {
+        // console.log('token: ', req.headers.authorization);
         try {
             const {number, password} = req.body;
+            console.log('number: ', number, 'password: ', password);
             const user = await User.findOne({number});
             if (!user) {
                 return res.status(400).json({message: `Пользователь по номеру ${number} не найден`});
@@ -54,6 +57,7 @@ class authController {
         }
     }
     async getUsers(req, res) {
+        console.log('token: ', req.headers.authorization);
         try {
             const users = await User.find();
             res.json(users);

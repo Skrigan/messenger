@@ -1,4 +1,9 @@
 export interface User {
-  phone: string
+  number: string
+  password: string
+}
+
+export interface NewUser {
+  number: string
   password: string
 }
