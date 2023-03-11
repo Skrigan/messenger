@@ -13,15 +13,26 @@ export class ChatsComponent implements OnInit, OnDestroy {
   constructor(private service: GeneralService) {
   }
 
+  chatView(res: any) {
+    const fragment = document.createDocumentFragment();
+    for (let item of res) {
+      console.log('item: ', item);
+      let cont = document.createEvent('div');
+    }
+  }
+
   ngOnInit() {
     this.aSub = this.service.getChats().subscribe(
       (res) => {
-        console.log('res: ', res)
+        console.log('res: ', res);
+        this.chatView(res);
       },
       (error) => {
         console.warn(error);
       }
     );
+
+    //fff
 
     // this.aSub = this.service.getChats().subscribe(
     //   (res) => {
