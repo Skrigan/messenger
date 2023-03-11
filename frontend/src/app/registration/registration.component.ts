@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {AuthService} from "../shared/secvices/auth.service";
+import {GeneralService} from "../shared/general.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -13,7 +13,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   form: FormGroup
   aSub: Subscription
 
-  constructor(private auth: AuthService,
+  constructor(private auth: GeneralService,
               private router: Router) { //!!!!!!!!!!!!!!!!!!!!
   }
 

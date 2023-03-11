@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from "../shared/secvices/auth.service";
+import {GeneralService} from "../shared/general.service";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -10,18 +10,36 @@ import {Subscription} from "rxjs";
 export class ChatsComponent implements OnInit, OnDestroy {
   aSub: Subscription
 
-  constructor(private auth: AuthService) {
+  constructor(private service: GeneralService) {
   }
 
   ngOnInit() {
-    this.aSub = this.auth.getUsers().subscribe(
+    this.aSub = this.service.getChats().subscribe(
       (res) => {
-        console.log('Getter is successful: ', res);
+        console.log('res: ', res)
       },
       (error) => {
         console.warn(error);
       }
     );
+
+    // this.aSub = this.service.getChats().subscribe(
+    //   (res) => {
+    //     console.log('res: ', res)
+    //   },
+    //   (error) => {
+    //     console.warn(error);
+    //   }
+    // );
+
+    // this.aSub = this.service.getUserByNumber('1234512345').subscribe(
+    //   (res) => {
+    //     console.log('Getter is successful: ', res);
+    //   },
+    //   (error) => {
+    //     console.warn(error);
+    //   }
+    // );
     // this.aSub.unsubscribe();
   }
 
@@ -32,7 +50,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
 
   // async getUsers() {
-  //   let response = await fetch('http://127.0.0.1:5000/auth/users', {
+  //   let response = await fetch('http://127.0.0.1:5000/service/users', {
   //     method: 'GET'
   //   });
   //   console.log(response);
