@@ -11,18 +11,18 @@
       <button class="clear" (click)="clearForm()">X</button>
     </form>
   </header>
-  <div class="chat" *ngIf="!search.length">
-    <div class="card" *ngFor="let chat of chats">
-      <h5 class="card_member">
-        {{chat.members[0] === service.getUser()
-        ? chat.members[0].firstname + ' ' + chat.members[0].lastname
-        : chat.members[1].firstname + ' ' + chat.members[1].lastname }}
-      </h5>
-      <p  class="card_text">{{chat.messages[chat.messages.length - 1].text}}</p>
+  <div class="chat" *ngIf="!service.search.length">
+    <div class="card" *ngFor="let chat of service.chats" [routerLink]="['/chats', chat.member.id]">
+<!--      <div class="link" [routerLink]="['/chats', chat.member.id]">-->
+        <h5 class="card_member">
+          {{chat.member.firstname + ' ' + chat.member.lastname}}
+        </h5>
+        <p  class="card_text">{{chat.messages[chat.messages.length - 1].text}}</p>
+<!--      </div>-->
     </div>
   </div>
-  <div class="chat" *ngIf="search.length">
-    <div class="card" *ngFor="let user of search">
+  <div class="chat" *ngIf="service.search.length">
+    <div class="card" *ngFor="let user of service.search" [routerLink]="['/chats', user.id]">
       <h5 class="card_member">{{user.firstname + ' ' + user.lastname}}</h5>
       <p  class="card_text">{{"+"+user.number}}</p>
     </div>

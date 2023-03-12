@@ -8,8 +8,10 @@ import {chat, User, UserInfo} from "./interfaces";
 })
 export class GeneralService {
 
-  private token = null;
-  private user = null;
+  public token = null;
+  public user = null;
+  chats: any[];
+  search: any = [];
 
   constructor(private http: HttpClient) {
   }
@@ -45,6 +47,10 @@ export class GeneralService {
           }
         )
       );
+  }
+
+  sendMessage(message: any):Observable<any>  {
+    return this.http.post<any>('http://127.0.0.1:5000/auth/sendMessage', message)
   }
 
   setToken(token: string) {

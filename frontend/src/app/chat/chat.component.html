@@ -1,12 +1,16 @@
 <div class="main">
   <header class="header wrapper">
-    <h5 class="username">firstname lastname</h5>
-    <p class="usertel">telephone</p>
+    <h5 class="username">{{chat.member.firstname+' '+chat.member.lastname}}</h5>
+    <p class="usertel">{{'+'+chat.member.number}}</p>
   </header>
   <div class="container wrapper">
-    <div class="messages">текст</div>
+    <div class="messages">
+<!--      <div class="message" *ngFor="let message of chat.messages">{{message.text}}</div>-->
+      <div *ngFor="let message of chat.messages" class="{{getMessageClass(message)}}">{{message.text}}</div>
+<!--    Сообщение-->
+    </div>
     <form  [formGroup]="messageForm" (ngSubmit)="submit()" class="form">
-      <input formControlName="text" type="text" class="input" placeholder="Message">
+      <input formControlName="text" class="input" placeholder="Message">
       <button class="submit" type="submit">
 <!--        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
 <!--          <path d="M15 15L21 21" stroke="#70a7cf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->

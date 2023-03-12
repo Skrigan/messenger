@@ -11,8 +11,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class ChatsComponent implements OnInit, OnDestroy {
   aSub: Subscription;
   searchForm: FormGroup;
-  chats: any[];
-  search: any = [];
+  // chats: any[];
+  // search: any = [];
 
   constructor(public service: GeneralService) {
   }
@@ -36,7 +36,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.aSub = this.service.getChats().subscribe(
       (res) => {
         console.log('chats: ', res);
-        this.chats = res;
+        this.service.chats = res;
 
       },
       (error) => {
@@ -72,9 +72,9 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
       this.service.getUsersByNumber(this.searchForm.value).subscribe(
         (res) => {
-          this.search = res;
+          this.service.search = res;
           this.searchForm.enable();
-          console.log('Search successful: ', this.search);
+          console.log('Search successful: ', this.service.search);
         },
         (error) => {
           console.warn(error);
@@ -85,7 +85,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
   clearForm() {
     this.searchForm.reset();
-    this.search = [];
+    this.service.search = [];
   }
 
   ngOnDestroy() {

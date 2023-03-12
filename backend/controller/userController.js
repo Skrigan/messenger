@@ -33,6 +33,15 @@ class userController {
         }
     }
 
+    async sendMessage(req, res) {
+        try {
+            const users = await User.find();
+            res.json(users);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     async getChats(req, res) {
         try {
             const {_id} = req.body;
@@ -66,7 +75,8 @@ class userController {
             for (let i = 0; i < chats.length; i++) {
                 const obj = {}
                 obj.id = users[i]._id;
-                obj.members =  users[i].members;
+                obj.member = users[i].members.find((item) => typeof item === 'object')
+                // obj.members =  users[i].members;
                 obj.messages =  messages[i];
                 response.push(obj);
             }
