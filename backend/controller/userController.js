@@ -35,8 +35,13 @@ class userController {
 
     async sendMessage(req, res) {
         try {
-            const users = await User.find();
-            res.json(users);
+            // const chat = new Chat({members: ['6407bbc9344989acafd8cfb4', '6407e185344989acafd8cfbb']});
+            // await chat.save();
+
+            const message = new Message(req.body)
+            console.log('new Message: ', message);
+            await message.save();
+            res.json(message);
         } catch (e) {
             console.log(e);
         }

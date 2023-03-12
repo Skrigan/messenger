@@ -3,7 +3,7 @@
     <h5 class="username">{{chat.member.firstname+' '+chat.member.lastname}}</h5>
     <p class="usertel">{{'+'+chat.member.number}}</p>
   </header>
-  <div class="container wrapper">
+  <div class="container">
     <div class="messages">
 <!--      <div class="message" *ngFor="let message of chat.messages">{{message.text}}</div>-->
       <div *ngFor="let message of chat.messages" class="{{getMessageClass(message)}}">{{message.text}}</div>

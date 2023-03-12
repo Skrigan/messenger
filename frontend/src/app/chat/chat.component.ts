@@ -19,6 +19,7 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.chat = this.service.chats.find((item) => item.member.id === params['memberId']);
+      console.log('chat', this.chat);
     })
     this.messageForm = new FormGroup({
       text: new FormControl('', Validators.required),
@@ -36,20 +37,23 @@ export class ChatComponent implements OnInit {
   submit() {
     if (this.messageForm.valid) {
       console.log('chat: ', this.chat);
-      // this.messageForm.disable();
+      this.messageForm.disable();
       const payload = {}
       payload['conversationId'] = this.chat.id;
       payload['sender'] = this.service.user.id;
       payload['text'] = this.messageForm.value.text;
       console.log('payload: ', payload);
-      this.service.sendMessage(this.messageForm.value).subscribe(
+      this.service.sendMessage(payload).subscribe(
         (res) => {
           console.log('res', res);
-
+          this.chat.messages.push(res);
+          console.log('AFTER PUSH: ', this.chat);
+          this.messageForm.reset();
           this.messageForm.enable();
         },
         (error) => {
           console.warn(error);
+          this.messageForm.enable();
         }
       )
     }
