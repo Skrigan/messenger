@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../shared/general.service";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -10,7 +10,8 @@ import {ActivatedRoute, Params} from "@angular/router";
 })
 export class ChatComponent implements OnInit {
   messageForm: FormGroup;
-  chat: any = null;
+  chat: any = undefined;
+  potentialMember: any;
 
   constructor(public service: GeneralService,
               private route: ActivatedRoute) {
@@ -19,7 +20,15 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.chat = this.service.chats.find((item) => item.member.id === params['memberId']);
-      console.log('chat', this.chat);
+      // console.log('chat', this.chat);
+      if (this.chat === undefined) {
+        this.potentialMember = this.service.search.find((item) => item.id === params['memberId']);
+        console.log('potentialMember: ', this.potentialMember);
+        console.log('firstname: ', this.potentialMember.firstname);
+        console.log('lastname: ', this.potentialMember.lastname);
+        console.log('number: ', this.potentialMember.number);
+      }
+      // console.log('chat', this.chat);
     })
     this.messageForm = new FormGroup({
       text: new FormControl('', Validators.required),
@@ -36,26 +45,40 @@ export class ChatComponent implements OnInit {
 
   submit() {
     if (this.messageForm.valid) {
-      console.log('chat: ', this.chat);
+      // console.log('chat: ', this.chat);
       this.messageForm.disable();
       const payload = {}
-      payload['conversationId'] = this.chat.id;
       payload['sender'] = this.service.user.id;
       payload['text'] = this.messageForm.value.text;
-      console.log('payload: ', payload);
-      this.service.sendMessage(payload).subscribe(
-        (res) => {
-          console.log('res', res);
-          this.chat.messages.push(res);
-          console.log('AFTER PUSH: ', this.chat);
-          this.messageForm.reset();
-          this.messageForm.enable();
-        },
-        (error) => {
-          console.warn(error);
-          this.messageForm.enable();
-        }
-      )
+      if (this.chat) {
+        payload['conversationId'] = this.chat.id;
+        // console.log('payload: ', payload);
+        this.service.sendMessage(payload).subscribe(
+          (res) => {
+            // console.log('res', res);
+            this.chat.messages.push(res);
+            // console.log('AFTER PUSH: ', this.chat);
+            this.messageForm.reset();
+            this.messageForm.enable();
+          },
+          (error) => {
+            console.warn(error);
+            this.messageForm.enable();
+          }
+        )
+      } else {
+        payload['member'] = this.potentialMember.id;
+        // console.log('payload: ', payload);
+        this.service.newChat(payload).subscribe(
+          (res) => {
+            console.log('res', res);
+          },
+          (error) => {
+            console.warn(error);
+            this.messageForm.enable();
+          }
+        )
+      }
     }
   }
 }

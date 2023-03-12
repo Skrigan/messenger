@@ -47,6 +47,26 @@ class userController {
         }
     }
 
+    async newChat(req, res) {
+        try {
+            const {sender, text, member} = req.body
+            console.log('sender: ', sender,'text: ', text,'member: ', member)
+            const chat = new Chat({members: [sender, member]});
+            const message = new Message({
+                conversationId: chat._id,
+                sender,
+                text
+            })
+            console.log('chat: ', chat);
+            console.log('message: ', message);
+            await chat.save();
+            await message.save();
+            res.json(message);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     async getChats(req, res) {
         try {
             const {_id} = req.body;

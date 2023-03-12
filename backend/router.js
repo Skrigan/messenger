@@ -15,6 +15,7 @@ router.post('/login', authController.login);
 router.post('/usersByNumber', authMiddleware, userController.getUsersByNumber);
 router.post('/getChats', authMiddleware, userController.getChats)
 router.post('/sendMessage', authMiddleware, userController.sendMessage)
+router.post('/newChat', authMiddleware, userController.newChat)
 router.get('/users', authMiddleware, userController.getUsers);
 
 module.exports = router;

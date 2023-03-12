@@ -1,14 +1,19 @@
 <div class="main">
-  <header class="header wrapper">
+  <header class="header wrapper" *ngIf="chat">
     <h5 class="username">{{chat.member.firstname+' '+chat.member.lastname}}</h5>
     <p class="usertel">{{'+'+chat.member.number}}</p>
   </header>
+  <header class="header wrapper" *ngIf="!chat">
+    <h5 class="username">{{potentialMember.firstname+' '+potentialMember.lastname}}</h5>
+    <p class="usertel">{{'+'+potentialMember.number}}</p>
+  </header>
   <div class="container">
-    <div class="messages">
+    <div class="messages" *ngIf="chat">
 <!--      <div class="message" *ngFor="let message of chat.messages">{{message.text}}</div>-->
       <div *ngFor="let message of chat.messages" class="{{getMessageClass(message)}}">{{message.text}}</div>
 <!--    Сообщение-->
     </div>
+    <div class="messages" *ngIf="!chat"></div>
     <form  [formGroup]="messageForm" (ngSubmit)="submit()" class="form">
       <input formControlName="text" class="input" placeholder="Message">
       <button class="submit" type="submit">

@@ -37,7 +37,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
       (res) => {
         console.log('chats: ', res);
         this.service.chats = res;
-
       },
       (error) => {
         console.warn(error);

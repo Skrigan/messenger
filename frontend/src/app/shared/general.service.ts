@@ -14,6 +14,8 @@ export class GeneralService {
   search: any = [];
 
   constructor(private http: HttpClient) {
+    this.token = localStorage.getItem('token');
+    this.user = JSON.parse(localStorage.getItem('user'));
   }
 
   getUsers():Observable<User> {
@@ -42,6 +44,7 @@ export class GeneralService {
         tap(
           ({token, user}) => {
             localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
             this.setToken(token);
             this.setUser(user);
           }
@@ -51,6 +54,10 @@ export class GeneralService {
 
   sendMessage(message: any):Observable<any>  {
     return this.http.post<any>('http://127.0.0.1:5000/auth/sendMessage', message)
+  }
+
+  newChat(message: any):Observable<any>  {
+    return this.http.post<any>('http://127.0.0.1:5000/auth/newChat', message)
   }
 
   setToken(token: string) {
