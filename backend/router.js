@@ -12,7 +12,7 @@ router.post('/registration', [
     check('password', 'password length must be between 4 and 12 characters').isLength({min: 4, max: 12}) //!!!!!!!!!!!!!!!!!!!!!! правильно ли 4 и 12?
 ], authController.registration);
 router.post('/login', authController.login);
-router.post('/userByNumber', authMiddleware, userController.getUsersByNumber);
+router.post('/usersByNumber', authMiddleware, userController.getUsersByNumber);
 router.post('/getChats', authMiddleware, userController.getChats)
 router.get('/users', authMiddleware, userController.getUsers);
 

@@ -9,13 +9,15 @@ import { RegistrationComponent } from './registration/registration.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { ChatsComponent } from './chats/chats.component';
 import {TokenInterceptor} from "./shared/classes/token.interceptor";
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
     AuthorizationComponent,
-    ChatsComponent
+    ChatsComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

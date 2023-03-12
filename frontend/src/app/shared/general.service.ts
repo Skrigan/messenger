@@ -18,13 +18,16 @@ export class GeneralService {
     return this.http.get<User>('http://127.0.0.1:5000/auth/users')
   }
 
-  getUserByNumber(number: string):Observable<UserInfo> {
-    return this.http.post<UserInfo>('http://127.0.0.1:5000/auth/userByNumber', {number})
+  getUsersByNumber(number: string):Observable<UserInfo> {
+    return this.http.post<UserInfo>('http://127.0.0.1:5000/auth/usersByNumber', number)
   }
 
   // getChats():Observable<chat> {
-  getChats():Observable<any> {
-    return this.http.post<any>('http://127.0.0.1:5000/auth/getChats', { _id: this.user.id })
+  getChats():Observable<any[]> {
+    return this.http.post<any[]>('http://127.0.0.1:5000/auth/getChats', { _id: this.user.id })
+    // const res = this.http.post<any[]>('http://127.0.0.1:5000/auth/getChats', { _id: this.user.id })
+    // this.chats = res;
+    // return res;
   }
 
   register(user: User):Observable<User> {

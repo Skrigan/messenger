@@ -6,7 +6,7 @@ const {validationResult} = require('express-validator');
 const {secret} = require('../config');
 const UserDto = require('../dtos/user-dto')
 const {numberToFormat} = require('../utils')
-const Chat = require("../models/Chat");
+const Message = require("../models/Message");
 
 const generateAccessToken = (id, roles) => {
     const payload = {
@@ -26,12 +26,12 @@ class authController {
             }
             let { firstname, lastname, number, password } = req.body;
             const candidate = await User.findOne({number}) //!!!!!!!!!!!!!!!!!!!!!!!!! findById(mongoID)
+            number = numberToFormat(number);
             if (candidate) {
                 return res.status(400).json({message: 'Пользователь с таким номером уже существует'});
             }
             const hashPassword = bcrypt.hashSync(password, 7);
             const userRole = await Role.findOne({value: "USER"});
-            number = numberToFormat(number);
             const user = new User({firstname, lastname, number, password: hashPassword, roles: [userRole.value]});
             await user.save();
             return res.json({message: 'Пользователь успешно зарегистрирован'})

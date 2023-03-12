@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GeneralService} from "../shared/general.service";
 import {Subscription} from "rxjs";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-chats',
@@ -8,24 +9,35 @@ import {Subscription} from "rxjs";
   styleUrls: ['./chats.component.scss']
 })
 export class ChatsComponent implements OnInit, OnDestroy {
-  aSub: Subscription
+  aSub: Subscription;
+  searchForm: FormGroup;
+  chats: any[];
+  search: any = [];
 
-  constructor(private service: GeneralService) {
+  constructor(public service: GeneralService) {
   }
 
-  chatView(res: any) {
-    const fragment = document.createDocumentFragment();
-    for (let item of res) {
-      console.log('item: ', item);
-      let cont = document.createEvent('div');
-    }
-  }
+  // chatView(res: any) {
+  //   const fragment = document.createDocumentFragment();
+  //   for (let item of res) {
+  //     console.log('item: ', item);
+  //     let cont = document.createEvent('div');
+  //   }
+  // }
 
   ngOnInit() {
+    this.searchForm = new FormGroup({
+      number: new FormControl('', [
+        Validators.required,
+        // Validators.minLength(4),
+      ]),
+    })
+
     this.aSub = this.service.getChats().subscribe(
       (res) => {
-        console.log('res: ', res);
-        this.chatView(res);
+        console.log('chats: ', res);
+        this.chats = res;
+
       },
       (error) => {
         console.warn(error);
@@ -52,6 +64,28 @@ export class ChatsComponent implements OnInit, OnDestroy {
     //   }
     // );
     // this.aSub.unsubscribe();
+  }
+
+  submit() {
+    if (this.searchForm.valid) {
+      this.searchForm.disable();
+
+      this.service.getUsersByNumber(this.searchForm.value).subscribe(
+        (res) => {
+          this.search = res;
+          this.searchForm.enable();
+          console.log('Search successful: ', this.search);
+        },
+        (error) => {
+          console.warn(error);
+        }
+      )
+    }
+  }
+
+  clearForm() {
+    this.searchForm.reset();
+    this.search = [];
   }
 
   ngOnDestroy() {

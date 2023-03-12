@@ -2,14 +2,29 @@
   padding: 0 20px;
 }
 
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-bottom: 20px;
+}
+.messages {
+  flex-grow: 1;
+}
+
 .header {
   display: flex;
-  justify-content: space-between;
-  //background: #70a7cf;
   background: linear-gradient(45deg, #1bdaf2, #e77be7);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  gap: 20px;
+  height: 70px;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .input {
@@ -17,10 +32,7 @@
   width: 100%;
   outline: none;
   border: none;
-  border-radius: 15px;
   height: 30px;
-  padding-left: 15px;
-  //background-color: inherit;
 }
 .clear {
   position: absolute;
@@ -42,6 +54,11 @@
   right: -2px;
   top: -2px;
   border: 2px solid #70a7cf;
+}
+
+.svgsend {
+  margin-left: -2px;
+
 }
 
 .h2 {
@@ -69,7 +86,15 @@
     margin: 0px;
   }
 }
+.username {
+  font-size: 20px;
+  margin: 0;
+}
 
+.usertel {
+  font-size: 16px;
+  margin: 0;
+}
 .chat {
   padding: 10px 20px;
   display: flex;
