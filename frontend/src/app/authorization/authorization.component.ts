@@ -44,7 +44,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
       this.aSub = this.auth.login(this.form.value).subscribe(
         (res) => {
           console.log('Login successful: ', res);
-          this.router.navigate(['/chats'])
+          this.router.navigate(['/'])
         },
         (error) => {
           console.warn(error);

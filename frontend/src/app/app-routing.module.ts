@@ -7,11 +7,9 @@ import {AuthGuard} from "./shared/classes/auth.guard";
 import {ChatComponent} from "./chat/chat.component";
 
 const routes: Routes = [
-  // {path: '', component: Начальный обработчик},!!!!!!!!!!!!!!!!!!!!!!
   {path: 'authorization', component: AuthorizationComponent},
   {path: 'registration', component: RegistrationComponent},
-  {path: 'chats', component: ChatsComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
-  // {path: 'chat', component: ChatComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
+  {path: '', component: ChatsComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
   {path: 'chats/:memberId', component: ChatComponent, canActivate: [AuthGuard]},
 ];
 
