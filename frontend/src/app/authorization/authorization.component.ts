@@ -51,9 +51,6 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
           this.form.enable();
         }
       );
-      // console.log(this.form.value);
-      // this.auth.login(this.form.value).then((res) => console.log(res.body));
-      // this.auth.login(this.form.value)
       this.form.reset();
     }
   }

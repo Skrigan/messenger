@@ -11,25 +11,14 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class ChatsComponent implements OnInit, OnDestroy {
   aSub: Subscription;
   searchForm: FormGroup;
-  // chats: any[];
-  // search: any = [];
 
   constructor(public service: GeneralService) {
   }
-
-  // chatView(res: any) {
-  //   const fragment = document.createDocumentFragment();
-  //   for (let item of res) {
-  //     console.log('item: ', item);
-  //     let cont = document.createEvent('div');
-  //   }
-  // }
 
   ngOnInit() {
     this.searchForm = new FormGroup({
       number: new FormControl('', [
         Validators.required,
-        // Validators.minLength(4),
       ]),
     })
 
@@ -42,27 +31,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
         console.warn(error);
       }
     );
-
-    //fff
-
-    // this.aSub = this.service.getChats().subscribe(
-    //   (res) => {
-    //     console.log('res: ', res)
-    //   },
-    //   (error) => {
-    //     console.warn(error);
-    //   }
-    // );
-
-    // this.aSub = this.service.getUserByNumber('1234512345').subscribe(
-    //   (res) => {
-    //     console.log('Getter is successful: ', res);
-    //   },
-    //   (error) => {
-    //     console.warn(error);
-    //   }
-    // );
-    // this.aSub.unsubscribe();
   }
 
   submit() {
@@ -92,11 +60,4 @@ export class ChatsComponent implements OnInit, OnDestroy {
       this.aSub.unsubscribe();
     }
   }
-
-  // async getUsers() {
-  //   let response = await fetch('http://127.0.0.1:5000/service/users', {
-  //     method: 'GET'
-  //   });
-  //   console.log(response);
-  // }
 }

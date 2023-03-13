@@ -56,9 +56,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           this.form.enable();
         }
       );
-      // console.log('Form submitted: ', this.form);
       const formData = {...this.form.value};
-      console.log('formData: ', formData);
       this.form.reset();
     }
   }
