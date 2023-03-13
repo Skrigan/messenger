@@ -59,5 +59,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     if (this.aSub) {
       this.aSub.unsubscribe();
     }
+    // this.searchForm.reset();
   }
 }

@@ -43,7 +43,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
       this.aSub = this.auth.login(this.form.value).subscribe(
         (res) => {
-          console.log('Login successful: ', res);
+          console.log('Login successful: ', res.token);
           this.router.navigate(['/'])
         },
         (error) => {

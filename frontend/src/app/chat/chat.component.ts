@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../shared/general.service";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -8,7 +8,7 @@ import {ActivatedRoute, Params} from "@angular/router";
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   messageForm: FormGroup;
   chat: any = undefined;
   potentialMember: any;
@@ -16,6 +16,10 @@ export class ChatComponent implements OnInit {
 
   constructor(public service: GeneralService,
               private route: ActivatedRoute) {
+  }
+
+  ngOnDestroy() {
+    this.service.search = [];
   }
 
   ngOnInit() {

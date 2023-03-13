@@ -26,13 +26,11 @@ export class GeneralService {
     return this.http.post<UserInfo>('http://127.0.0.1:5000/auth/usersByNumber', number)
   }
 
-  // getChats():Observable<chat> {
   getChats():Observable<any[]> {
     return this.http.post<any[]>('http://127.0.0.1:5000/auth/getChats', { _id: this.user.id })
-    // const res = this.http.post<any[]>('http://127.0.0.1:5000/auth/getChats', { _id: this.user.id })
-    // this.chats = res;
-    // return res;
   }
+
+
 
   register(user: User):Observable<User> {
     return this.http.post<User>('http://127.0.0.1:5000/auth/registration', user)
@@ -43,6 +41,7 @@ export class GeneralService {
       .pipe(
         tap(
           ({token, user}) => {
+            // token = token + "123"
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
             this.setToken(token);
